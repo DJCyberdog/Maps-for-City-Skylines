@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maps für Cities: Skylines</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-o9N1j/rpFqjag2L1dm3lXTBPT8KcdsYfE+aSK1A+4mM="
+    crossorigin=""
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"
+    integrity="sha512-gKveoxkmKuuNHYsYvwdivEafgAvFp8ZUBKbjrKMgVNdXBJgp7wa9u0edPFsKnz03WxZmf0RduCMsZ/HXXCtKxA=="
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Maps zu Cities: Skylines konvertieren</h1>
+    <p>Wähle einen Kartenausschnitt aus OpenStreetMap oder Google Maps und exportiere eine Heightmap samt Metadaten für den Map-Editor.</p>
+  </header>
+  <main>
+    <section class="controls">
+      <div class="layer-picker">
+        <label for="layerSelect">Kartenquelle:</label>
+        <select id="layerSelect">
+          <option value="osm">OpenStreetMap</option>
+          <option value="google">Google Maps (Satellit)</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button id="convertBtn">Heightmap erzeugen</button>
+        <button id="downloadBtn" disabled>PNG herunterladen</button>
+        <button id="metadataBtn" disabled>Metadaten speichern</button>
+      </div>
+      <div class="hint">Tipp: Zeichne ein Rechteck auf der Karte, das deinem gewünschten Spielfeld entspricht (max. 25 km x 25 km empfohlen).</div>
+    </section>
+
+    <section class="layout">
+      <div id="map"></div>
+      <aside>
+        <h2>Workflow</h2>
+        <ol>
+          <li>Wähle oben die Kartenquelle.</li>
+          <li>Zoome in den gewünschten Bereich und ziehe ein Rechteck auf der Karte.</li>
+          <li>Klicke auf <strong>Heightmap erzeugen</strong>, um eine 512×512 PNG zu generieren.</li>
+          <li>Speichere PNG und Metadaten und importiere sie im Cities: Skylines Map-Editor.</li>
+        </ol>
+        <div class="status">
+          <h3>Status</h3>
+          <div id="status">Kein Bereich ausgewählt.</div>
+        </div>
+        <div class="metadata">
+          <h3>Metadaten-Vorschau</h3>
+          <pre id="metadataPreview">{}</pre>
+        </div>
+      </aside>
+    </section>
+
+    <section class="preview" id="previewSection" hidden>
+      <h2>Heightmap-Vorschau</h2>
+      <canvas id="previewCanvas" width="512" height="512"></canvas>
+      <p class="caption">Die Heightmap ist in Graustufen (0 = Wasser, 255 = höchster Punkt). Für Cities: Skylines solltest du die PNG in 8-Bit speichern.</p>
+    </section>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o8NcJbN7BMYX1k1gBgeQfbx3G5MJEH3VDP12p0lc+50="
+    crossorigin=""
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"
+    integrity="sha512-6JoPLD114F8CbnMD4HzyBbs6k8ZZrVSu2Ce279b9Ec/WWEDuJeayQMZT6X0hgqP/d9vywgqbiZ9erjRzNKXDpA=="
+    crossorigin="anonymous"
+  ></script>
+  <script src="script.js"></script>
+</body>
+</html>
